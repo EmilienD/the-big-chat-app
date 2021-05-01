@@ -1,38 +1,56 @@
-.App {
-  text-align: center;
+.App-messagelistcontainer {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 80vh;
+  border: 1px solid pink;
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 25em;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App-messagelist {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  list-style-type: none;
+  text-align: left;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0;
 }
 
-.App-link {
-  color: #61dafb;
+.App-messagelistitem {
+  padding: 0.5em 1em;
+  margin: 0.2em 1em 0.2em 0;
+  border-radius: 1em;
+  background-color: lightgray;
+  position: relative;
+}
+.App-messagelistitem:after {
+  position: absolute;
+  left: calc(100% + 0.5em);
+  content: attr(data-username);
+  color: gainsboro;
+  font-style: italic;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-messagelistitem.self {
+  margin: 0.2em 0 0.2em 1em;
+  background-color: darkolivegreen;
+  align-self: flex-end;
+}
+.App-messagelistitem.self:after {
+  content: '';
+}
+
+.App-textinput {
+  max-width: 25em;
+  width: 100%;
+  background-color: teal;
+  bottom: 0;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.App-textinput input {
+  flex: 2;
 }
