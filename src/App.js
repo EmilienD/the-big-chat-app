@@ -4,10 +4,10 @@ import './App.css'
 import cx from 'classnames'
 import { v4 } from 'uuid'
 
-import '@draft-js-plugins/emoji/lib/plugin.css'
 import { useEffect } from 'react'
 
-const websocket = new WebSocket('ws://192.168.1.7:3000/main')
+const incomingMessages = new WebSocket(process.env.REACT_APP_INCOMING_DATA_URL)
+const outgoingMessages = new WebSocket(process.env.REACT_APP_OUTGOING_DATA_URL)
 const fifo = (limit) => (array) => (item) =>
   array.length === limit ? array.slice(1).concat(item) : array.concat(item)
 const fifo500 = fifo(500)
@@ -21,8 +21,8 @@ function App() {
     const onMessage = (message) =>
       setMessages(addMessage(JSON.parse(message.data)))
 
-    websocket.addEventListener('message', onMessage)
-    return () => websocket.removeEventListener('message', onMessage)
+    incomingMessages.addEventListener('message', onMessage)
+    return () => incomingMessages.removeEventListener('message', onMessage)
   }, [messages])
   return (
     <>
@@ -46,7 +46,7 @@ function App() {
         method=""
         onSubmit={(e) => {
           e.preventDefault()
-          websocket.send(
+          outgoingMessages.send(
             JSON.stringify({
               ...user,
               id: v4(),
