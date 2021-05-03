@@ -1,0 +1,35 @@
+.MessageList {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  text-align: left;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0;
+  color: var(--eggshell);
+}
+
+.MessageList-item img {
+  vertical-align: middle;
+  height: 2em;
+}
+
+.MessageList-item .nick {
+  font-weight: bold;
+  padding-right: 0.5em;
+}
+
+.MessageList-item p,
+.MessageList-item div,
+.MessageList-item ol,
+.MessageList-item ul,
+.MessageList-item li {
+  display: inline;
+}
+.MessageList-item p:after,
+.MessageList-item div:after,
+.MessageList-item ol:after,
+.MessageList-item ul:after,
+.MessageList-item li:after {
+  content: ' ';
+}

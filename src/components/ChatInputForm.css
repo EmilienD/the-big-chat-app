@@ -1,0 +1,62 @@
+.ChatInputForm {
+  max-width: 25em;
+  width: 100%;
+  bottom: 0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  flex-direction: column;
+  height: 20vh;
+  align-content: space-between;
+  position: relative;
+  font-size: 1em;
+}
+
+.ChatInputForm-input {
+  border-radius: 5px;
+  grid-row: 1 / 3;
+  border: none;
+  display: inline;
+  resize: none;
+  padding: 0.5em;
+  box-sizing: border-box;
+  background-color: gray;
+  font-size: 1em;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+.ChatInputForm-input:focus {
+  background-color: var(--aero);
+  border: 0.1em solid var(--sky-magenta);
+}
+
+.ChatInputForm-button {
+  background-color: var(--sky-magenta);
+  opacity: 0.8;
+  box-sizing: border-box;
+  border-radius: 3rem;
+  height: 3rem;
+  width: 3rem;
+  border: none;
+  box-shadow: var(--button-depth) var(--button-depth) 0px black;
+  transition: all 10ms linear;
+  transform: scale(0.8);
+}
+
+.ChatInputForm-button:hover {
+  background-color: var(--sky-magenta);
+  opacity: 1;
+}
+
+.ChatInputForm-button:active {
+  box-shadow: 0px 0px 0px black;
+  transform: translate(var(--button-depth), var(--button-depth)) scale(0.8);
+}
+
+@media screen and (max-width: 500px) {
+  .ChatInputForm-button.toggle-emoji-picker-button {
+    display: none;
+  }
+}
