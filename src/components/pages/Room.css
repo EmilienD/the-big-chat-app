@@ -1,4 +1,4 @@
-.App-messagelistcontainer {
+.Room-messagelistcontainer {
   display: flex;
   flex-direction: column-reverse;
   height: 80vh;

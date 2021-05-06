@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import EmojiPicker from 'emoji-picker-react'
 import './ChatInputForm.css'
-import { SendIcon } from './SendIcon'
-import { SmileyIcon } from './SmileyIcon'
+import { SendIcon } from '../molecules/SendIcon'
+import { SmileyIcon } from '../molecules/SmileyIcon'
 
 const placeholders = [
   'Talk to the plebes, my lord...',
