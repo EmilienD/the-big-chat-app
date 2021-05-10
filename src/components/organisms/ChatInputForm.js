@@ -65,8 +65,7 @@ const ChatInputForm = ({ postMessage }) => {
         onChange={(ev) => {
           ev.preventDefault()
           const val = ev.target.value
-          const lastChar = val.charAt(val.length - 1)
-          if (lastChar === '\n' || lastChar === '\r') {
+          if (/(\n|\r)/.test(val)) {
             handleSubmit(ev)
           } else {
             setCurrentMessage(val)
