@@ -4,9 +4,8 @@
   bottom: 0;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr auto;
-  flex-direction: column;
-  height: 20vh;
+  grid-template-columns: 1fr 10%;
+  grid-template-rows: 1fr 1fr 1fr;
   align-content: space-between;
   position: relative;
   font-size: 1em;
@@ -22,11 +21,21 @@
   box-sizing: border-box;
   background-color: gray;
   font-size: 1em;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  height: 100%;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
     sans-serif;
 }
+
 .ChatInputForm-input:focus {
   background-color: var(--aero);
   border: 0.1em solid var(--sky-magenta);
@@ -36,13 +45,12 @@
   background-color: var(--sky-magenta);
   opacity: 0.8;
   box-sizing: border-box;
-  border-radius: 3rem;
-  height: 3rem;
-  width: 3rem;
+  border-radius: 1000px;
   border: none;
-  box-shadow: var(--button-depth) var(--button-depth) 0px black;
+  box-shadow: var(--button-depth) var(--button-depth) 0 black;
   transition: all 10ms linear;
   transform: scale(0.8);
+  padding: 10%;
 }
 
 .ChatInputForm-button:hover {
@@ -51,7 +59,7 @@
 }
 
 .ChatInputForm-button:active {
-  box-shadow: 0px 0px 0px black;
+  box-shadow: 0 0 0 black;
   transform: translate(var(--button-depth), var(--button-depth)) scale(0.8);
 }
 

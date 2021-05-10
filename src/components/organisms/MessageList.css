@@ -26,10 +26,4 @@
 .MessageList-item li {
   display: inline;
 }
-.MessageList-item p:after,
-.MessageList-item div:after,
-.MessageList-item ol:after,
-.MessageList-item ul:after,
-.MessageList-item li:after {
-  content: ' ';
-}
+

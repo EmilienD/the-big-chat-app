@@ -7,9 +7,11 @@
   background-color: var(--outer-space-crayola);
   color: var(--eggshell);
 }
+
 .NickOverlay-wrapper h2 {
   text-align: center;
 }
+
 .NickOverlay-wrapper form {
   padding: 1em 1em 0;
   margin: 0 auto;

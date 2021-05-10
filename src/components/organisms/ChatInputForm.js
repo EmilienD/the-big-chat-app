@@ -29,27 +29,6 @@ const ChatInputForm = ({ postMessage }) => {
   const [textAreaSelection, setTextAreaSelection] = useState([0, 0])
   return (
     <form className="ChatInputForm" method="" onSubmit={handleSubmit}>
-      <EmojiPicker
-        pickerStyle={{
-          width: 'calc(100% - 3em)',
-          position: 'absolute',
-          bottom: '100%',
-          display: showEmojiPicker ? 'flex' : 'none',
-          boxShadow: 'none',
-        }}
-        onEmojiClick={(ev, { emoji }) => {
-          setCurrentMessage(
-            `${currentMessage.slice(
-              0,
-              textAreaSelection[0]
-            )}${emoji}${currentMessage.slice(textAreaSelection[1])}`
-          )
-          const newSelectionIndex = textAreaSelection[0] + emoji.length
-          setTextAreaSelection([newSelectionIndex, newSelectionIndex])
-        }}
-        disableSkinTonePicker
-        native
-      />
       <textarea
         placeholder={placeholder}
         ref={textareaRef}
@@ -84,6 +63,29 @@ const ChatInputForm = ({ postMessage }) => {
       <button className="ChatInputForm-button">
         <SendIcon />
       </button>
+
+      {showEmojiPicker && (
+        <EmojiPicker
+          pickerStyle={{
+            width: 'calc(100% - 3em)',
+            position: 'absolute',
+            bottom: '100%',
+            boxShadow: 'none',
+          }}
+          onEmojiClick={(ev, { emoji }) => {
+            setCurrentMessage(
+              `${currentMessage.slice(
+                0,
+                textAreaSelection[0]
+              )}${emoji}${currentMessage.slice(textAreaSelection[1])}`
+            )
+            const newSelectionIndex = textAreaSelection[0] + emoji.length
+            setTextAreaSelection([newSelectionIndex, newSelectionIndex])
+          }}
+          disableSkinTonePicker
+          native
+        />
+      )}
     </form>
   )
 }

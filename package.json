@@ -41,6 +41,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react": "7.23.2"
+    "eslint-plugin-react": "7.23.2",
+    "stylelint": "13.13.1",
+    "stylelint-config-standard": "22.0.0"
   }
 }
