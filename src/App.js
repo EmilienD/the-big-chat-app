@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Route, Switch } from 'react-router-dom'
 import { Room } from './components/pages/Room'
 
 function App() {
+  const [user] = useState(JSON.parse(localStorage.getItem('user')))
+
   return (
     <Switch>
       <Route path="/rooms/:roomName">
@@ -11,7 +13,7 @@ function App() {
       </Route>
       <Route path="/terms-and-conditions">{() => 't&c'}</Route>
       <Route path="/">
-        <Room roomName="main" />
+        <Room roomName="main" user={user} />
       </Route>
     </Switch>
   )
