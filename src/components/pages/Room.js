@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import './Room.css'
 import { v4 } from 'uuid'
@@ -8,41 +8,68 @@ import MessageList from '../organisms/MessageList'
 import ChatInputForm from '../organisms/ChatInputForm'
 import { conf } from '../../config'
 import { Ola } from '../molecules/Ola'
+import useWebSocket from 'react-use-websocket'
 
 const fifo = (limit) => (array) => (item) =>
   array.length === limit ? array.slice(1).concat(item) : array.concat(item)
 const fifo500 = fifo(500)
 
 export const Room = ({ roomName = 'main', user }) => {
-  const incomingMessages = useRef(null)
-  const outgoingMessages = useRef(null)
+  const incomingMessages = useWebSocket(
+    `${conf.reactAppIncomingDataUrl}/${roomName}`
+  )
+  const outgoingMessages = useWebSocket(
+    `${conf.reactAppOutgoingDataUrl}/${roomName}`
+  )
   const [messages, setMessages] = useState([])
   const addMessage = fifo500(messages)
   useEffect(() => {
-    incomingMessages.current = new WebSocket(
-      `${conf.reactAppIncomingDataUrl}/${roomName}`
+    const lastMessage = JSON.parse(
+      incomingMessages.lastMessage && incomingMessages.lastMessage.data
     )
-    outgoingMessages.current = new WebSocket(
-      `${conf.reactAppOutgoingDataUrl}/${roomName}`
-    )
-    return () => {
-      incomingMessages.current.close()
-      outgoingMessages.current.close()
+    if (
+      lastMessage &&
+      lastMessage.id !==
+        (messages[messages.length - 1] && messages[messages.length - 1].id)
+    ) {
+      setMessages(addMessage(lastMessage))
     }
-  }, [])
+  }, [messages, incomingMessages.lastMessage])
   useEffect(() => {
-    const onMessage = (message) =>
-      setMessages(addMessage(JSON.parse(message.data)))
-    if (incomingMessages.current) {
-      incomingMessages.current.addEventListener('message', onMessage)
-      return () =>
-        incomingMessages.current.removeEventListener('message', onMessage)
-    }
-  }, [messages, incomingMessages])
+    fetch(`${conf.reactAppUserServiceUrl}/messages/${roomName}`)
+      .then((response) => response.json())
+      .then((body) => {
+        console.log(body)
+        const bodyMessagesIdMap = body.messages.reduce((acc, { message }) => {
+          acc[message.id] = message
+          return acc
+        }, {})
+        setMessages([
+          ...body.messages.map(({ message }) => message),
+          ...messages.filter((message) => !bodyMessagesIdMap[message.id]),
+        ])
+      })
+  }, [])
+  console.log(messages)
   return (
     <div className="Room-container">
       <div className="Room-messagelistcontainer">
-        <MessageList messages={messages} user={user} />
+        <MessageList
+          messages={messages}
+          user={user}
+          sendAnswer={(content) => {
+            outgoingMessages.current.send(
+              JSON.stringify({
+                ...user,
+                userId: user.id,
+                id: v4(),
+                datetime: new Date(),
+                content,
+                type: 'answer',
+              })
+            )
+          }}
+        />
       </div>
       <Ola messages={messages} />
       <ChatInputForm
@@ -50,13 +77,16 @@ export const Room = ({ roomName = 'main', user }) => {
           if (!message) {
             return
           } else if (user) {
-            outgoingMessages.current.send(
+            const [hasCommand, command, content] =
+              /\/(poll) (.+)/.exec(message) || []
+            outgoingMessages.sendMessage(
               JSON.stringify({
                 ...user,
                 userId: user.id,
                 id: v4(),
                 datetime: new Date(),
-                content: message,
+                content: hasCommand ? content : message,
+                type: hasCommand ? command : 'message',
               })
             )
           }
