@@ -1,6 +1,7 @@
 .ola-container {
   height: 0;
   position: relative;
+  pointer-events: none;
 }
 
 .ola-container > div {

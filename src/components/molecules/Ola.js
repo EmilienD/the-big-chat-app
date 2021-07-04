@@ -9,7 +9,6 @@ export const Ola = ({ messages = [] }) => {
   const [olaCounter, setOlaCounter] = useState(0)
   const [interactionState, setInteractionState] = useState('WAITING')
   const [startMessageId, setStartMessageId] = useState(null)
-  console.log(interactionState)
   useEffect(() => {
     const newestToOldestMessages = [...messages].reverse()
     switch (interactionState) {
