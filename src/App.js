@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
 
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { Room } from './components/pages/Room'
+import { Login } from './components/pages/Login'
 
 function App() {
-  const [user] = useState(JSON.parse(localStorage.getItem('user')))
+  let storedUser
+  try {
+    storedUser = JSON.parse(localStorage.getItem('user') || 'null')
+  } catch (e) {
+    localStorage.removeItem('user')
+  }
+  const [user, setUser] = useState(storedUser)
 
   return (
     <Switch>
@@ -12,6 +19,19 @@ function App() {
         {(route) => <Room roomName={(route.match.params.roomName = 'main')} />}
       </Route>
       <Route path="/terms-and-conditions">{() => 't&c'}</Route>
+      <Route path="/login">
+        {user ? (
+          <Redirect to="/" />
+        ) : (
+          <Login
+            onLogin={(user) => {
+              setUser(user)
+              localStorage.setItem('user', JSON.stringify(user))
+            }}
+          />
+        )}
+      </Route>
+      {user ? '' : <Redirect to="/login" />}
       <Route path="/">
         <Room roomName="main" user={user} />
       </Route>
