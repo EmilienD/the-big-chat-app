@@ -10,7 +10,7 @@ const placeholders = [
   `They're wrong, and you should tell them...`,
   `The problem is communication...`,
   `Confide your darkest secret to the cloud...`,
-  `Speak freely, everyone else is a bot...`,
+  `Speak freely, everyone else on here is a bot...`,
   `They're all waiting for you to talk...`,
 ]
 const placeholder =
