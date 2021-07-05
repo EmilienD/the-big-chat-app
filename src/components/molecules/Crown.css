@@ -1,0 +1,44 @@
+@keyframes pulsate {
+  40% {
+    transform: scale(0.6);
+  }
+  50% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(0.6);
+  }
+}
+
+.Crown img {
+  animation-iteration-count: 3;
+  animation-name: pulsate;
+  animation-duration: 1.5s;
+  animation-timing-function: ease;
+  transform: scale(0.5);
+  max-width: 100%;
+}
+
+.Crown {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-shadow: 0px 0px 10px var(--outer-space-crayola);
+  color: var(--eggshell);
+  text-align: center;
+  padding: 1em;
+  font-weight: bold;
+  font-size: 1.5em;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.Crown em {
+  text-decoration: underline ;
+  font-style: normal;
+  font-size: 1.2em;
+}

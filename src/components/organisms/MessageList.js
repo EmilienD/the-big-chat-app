@@ -21,6 +21,9 @@ const MessageList = ({ messages, sendAnswer }) => {
             return (
               <li key={message.id} className="MessageList-item">
                 <span className="nick" style={{ color: message.color }}>
+                  {(message.decorate || []).map((item) =>
+                    emotes[item] ? <Emote name={item} key={item} /> : item
+                  )}
                   {message.nickname}:
                 </span>
                 <Markdown

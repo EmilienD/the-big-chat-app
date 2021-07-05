@@ -8,13 +8,14 @@ import MessageList from '../organisms/MessageList'
 import ChatInputForm from '../organisms/ChatInputForm'
 import { conf } from '../../config'
 import { Ola } from '../molecules/Ola'
+import { Crown } from '../molecules/Crown'
 import useWebSocket from 'react-use-websocket'
 
 const fifo = (limit) => (array) => (item) =>
   array.length === limit ? array.slice(1).concat(item) : array.concat(item)
 const fifo500 = fifo(500)
 
-export const Room = ({ roomName = 'main', user }) => {
+export const Room = ({ roomName = 'main', user, setCrown }) => {
   const incomingMessages = useWebSocket(
     `${conf.reactAppIncomingDataUrl}/${roomName}`
   )
@@ -50,7 +51,6 @@ export const Room = ({ roomName = 'main', user }) => {
         ])
       })
   }, [])
-  console.log(messages)
   return (
     <div className="Room-container">
       <div className="Room-messagelistcontainer">
@@ -72,16 +72,22 @@ export const Room = ({ roomName = 'main', user }) => {
         />
       </div>
       <Ola messages={messages} />
+      <Crown messages={messages} setCrown={setCrown} user={user} />
       <ChatInputForm
         postMessage={(message) => {
           if (!message) {
             return
           } else if (user) {
             const [hasCommand, command, content] =
-              /\/(poll) (.+)/.exec(message) || []
+              /\/(poll|crown) (.+)/.exec(message) || []
+            // User has a crown since less than 30 minutes
+            const isKing =
+              user.crown && Date.now() - 1800000 < new Date(user.crown.datetime)
             outgoingMessages.sendMessage(
               JSON.stringify({
-                ...user,
+                nickname: user.nickname,
+                color: user.color,
+                decorate: isKing ? ['theking'] : [],
                 userId: user.id,
                 id: v4(),
                 datetime: new Date(),
@@ -98,4 +104,5 @@ export const Room = ({ roomName = 'main', user }) => {
 Room.propTypes = {
   roomName: PropTypes.string,
   user: PropTypes.object,
+  setCrown: PropTypes.func,
 }

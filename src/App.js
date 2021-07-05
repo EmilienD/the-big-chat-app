@@ -16,7 +16,17 @@ function App() {
   return (
     <Switch>
       <Route path="/rooms/:roomName">
-        {(route) => <Room roomName={(route.match.params.roomName = 'main')} />}
+        {(route) => (
+          <Room
+            roomName={route.match.params.roomName}
+            user={user}
+            setCrown={(crown) => {
+              const updatedUser = { ...user, crown }
+              localStorage.setItem('user', JSON.stringify(updatedUser))
+              setUser(updatedUser)
+            }}
+          />
+        )}
       </Route>
       <Route path="/terms-and-conditions">{() => 't&c'}</Route>
       <Route path="/login">
@@ -33,7 +43,15 @@ function App() {
       </Route>
       {user ? '' : <Redirect to="/login" />}
       <Route path="/">
-        <Room roomName="main" user={user} />
+        <Room
+          roomName="main"
+          user={user}
+          setCrown={(crown) => {
+            const updatedUser = { ...user, crown }
+            localStorage.setItem('user', JSON.stringify(updatedUser))
+            setUser(updatedUser)
+          }}
+        />
       </Route>
     </Switch>
   )
