@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Markdown from 'markdown-to-jsx'
 import Emote, { emotes } from './Emote'
 import './MessageList.css'
-import { Form, Field } from 'react-final-form'
+import { Poll } from '../molecules/Poll'
 const noRenderOverride = { component: () => null }
 
 const MessageList = ({ messages, sendAnswer }) => {
@@ -15,13 +15,13 @@ const MessageList = ({ messages, sendAnswer }) => {
   )
   return (
     <ol className="MessageList">
-      {messages.map(({ id, content, nickname, color, type }) => {
+      {messages.map(({ type, ...message }) => {
         switch (type) {
           case 'message':
             return (
-              <li key={id} className="MessageList-item">
-                <span className="nick" style={{ color }}>
-                  {nickname}:
+              <li key={message.id} className="MessageList-item">
+                <span className="nick" style={{ color: message.color }}>
+                  {message.nickname}:
                 </span>
                 <Markdown
                   options={{
@@ -35,7 +35,7 @@ const MessageList = ({ messages, sendAnswer }) => {
                     },
                   }}
                 >
-                  {content.replaceAll(
+                  {message.content.replaceAll(
                     emoteRegexp,
                     (name) => `<Emote name="${name.trim()}"/>`
                   )}
@@ -44,54 +44,12 @@ const MessageList = ({ messages, sendAnswer }) => {
             )
           case 'poll':
             return (
-              <li
-                key={id}
-                style={{
-                  border: '1px solid orange',
-                  borderRadius: '10px',
-                  backgroundColor: 'rgba(255,255, 0, 0.2)',
-                  padding: '0.5em 1em',
-                  margin: '1em',
-                }}
-              >
-                <span style={{ fontStyle: 'italic', fontSize: '0.7em' }}>
-                  I have a question for you:
-                </span>
-                <p style={{ padding: '0.5em 0 0', margin: 0 }}>{content}</p>
-                <Form
-                  onSubmit={(values) => {
-                    sendAnswer({ ...values, questionId: id })
-                  }}
-                >
-                  {({ handleSubmit }) => (
-                    <form onSubmit={handleSubmit}>
-                      <Field type="text" component="input" name="answer" />
-                      <button>answer</button>
-                    </form>
-                  )}
-                </Form>
-                <ul style={{ padding: '0.5em 0', listStyleType: 'none' }}>
-                  {Array.from(
-                    messages
-                      .reduce((acc, message) => {
-                        if (
-                          message.type === 'answer' &&
-                          message.content.questionId === id
-                        ) {
-                          acc.set(message.userId, message)
-                        }
-                        return acc
-                      }, new Map())
-                      .values()
-                  ).map((answer) => (
-                    <li key={answer.id}>
-                      <span className="nick" style={{ color: answer.color }}>
-                        {answer.nickname}:
-                      </span>{' '}
-                      {answer.content.answer}
-                    </li>
-                  ))}
-                </ul>
+              <li key={message.id}>
+                <Poll
+                  sendAnswer={sendAnswer}
+                  pollMessage={message}
+                  messages={messages}
+                />
               </li>
             )
           default:
