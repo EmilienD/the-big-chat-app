@@ -58,7 +58,7 @@ export const Room = ({ roomName = 'main', user }) => {
           messages={messages}
           user={user}
           sendAnswer={(content) => {
-            outgoingMessages.current.send(
+            outgoingMessages.sendMessage(
               JSON.stringify({
                 ...user,
                 userId: user.id,
