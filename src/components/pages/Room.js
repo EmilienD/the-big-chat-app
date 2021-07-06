@@ -46,7 +46,7 @@ export const Room = ({ roomName = 'main', user, setCrown }) => {
           return acc
         }, {})
         setMessages([
-          ...body.messages.map(({ message }) => message),
+          ...body.messages.reverse().map(({ message }) => message),
           ...messages.filter((message) => !bodyMessagesIdMap[message.id]),
         ])
       })
