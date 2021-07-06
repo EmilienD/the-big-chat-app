@@ -3,8 +3,9 @@ import React from 'react'
 export const SmileyIcon = (props) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
+      style={{ width: '100%' }}
       viewBox="0 0 60.499 60.499"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
