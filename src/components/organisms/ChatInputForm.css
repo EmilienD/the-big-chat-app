@@ -4,7 +4,7 @@
   bottom: 0;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 10%;
+  grid-template-columns: 1fr 9%;
   grid-template-rows: 1fr 1fr;
   align-content: space-between;
   position: relative;
@@ -64,8 +64,3 @@
   transform: translate(var(--button-depth), var(--button-depth)) scale(0.8);
 }
 
-@media screen and (max-width: 500px) {
-  .ChatInputForm-button.toggle-emoji-picker-button {
-    display: none;
-  }
-}

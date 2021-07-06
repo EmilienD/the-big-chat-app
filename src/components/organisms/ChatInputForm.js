@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import EmojiPicker from 'emoji-picker-react'
 import './ChatInputForm.css'
 import { SendIcon } from '../molecules/SendIcon'
 import { SmileyIcon } from '../molecules/SmileyIcon'
+import { EmotePicker } from '../organisms/Emote'
 
 const placeholders = [
   'Talk to the plebes, my lord...',
@@ -28,65 +28,69 @@ const ChatInputForm = ({ postMessage }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const [textAreaSelection, setTextAreaSelection] = useState([0, 0])
   return (
-    <form className="ChatInputForm" method="" onSubmit={handleSubmit}>
-      <textarea
-        placeholder={placeholder}
-        ref={textareaRef}
-        className="ChatInputForm-input"
-        name="messageInput"
-        value={currentMessage}
-        type="text"
-        onFocus={() => setShowEmojiPicker(false)}
-        onBlur={() => {
-          const textarea = textareaRef.current
-          setTextAreaSelection([textarea.selectionStart, textarea.selectionEnd])
-        }}
-        onChange={(ev) => {
-          ev.preventDefault()
-          const val = ev.target.value
-          if (/(\n|\r)/.test(val)) {
-            handleSubmit(ev)
-          } else {
-            setCurrentMessage(val)
-          }
-        }}
-      ></textarea>
-      <div>
-        <button
-          type="button"
-          className="ChatInputForm-button toggle-emoji-picker-button"
-          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-        >
-          <SmileyIcon />
-        </button>
-      </div>
-      <button className="ChatInputForm-button">
-        <SendIcon />
-      </button>
-
+    <>
       {showEmojiPicker && (
-        <EmojiPicker
+        <EmotePicker
           pickerStyle={{
             width: 'calc(100% - 3em)',
             position: 'absolute',
             bottom: '100%',
             boxShadow: 'none',
           }}
-          onEmojiClick={(ev, { emoji }) => {
+          onPick={(emote) => {
             setCurrentMessage(
               `${currentMessage.slice(
                 0,
                 textAreaSelection[0]
-              )}${emoji}${currentMessage.slice(textAreaSelection[1])}`
+              )}${emote}${currentMessage.slice(textAreaSelection[1])}`
             )
-            const newSelectionIndex = textAreaSelection[0] + emoji.length
+            const newSelectionIndex = textAreaSelection[0] + emote.length
             setTextAreaSelection([newSelectionIndex, newSelectionIndex])
           }}
           disableSkinTonePicker
           native
         />
       )}
-    </form>
+      <form className="ChatInputForm" method="" onSubmit={handleSubmit}>
+        <textarea
+          placeholder={placeholder}
+          ref={textareaRef}
+          className="ChatInputForm-input"
+          name="messageInput"
+          value={currentMessage}
+          type="text"
+          onFocus={() => setShowEmojiPicker(false)}
+          onBlur={() => {
+            const textarea = textareaRef.current
+            setTextAreaSelection([
+              textarea.selectionStart,
+              textarea.selectionEnd,
+            ])
+          }}
+          onChange={(ev) => {
+            ev.preventDefault()
+            const val = ev.target.value
+            if (/(\n|\r)/.test(val)) {
+              handleSubmit(ev)
+            } else {
+              setCurrentMessage(val)
+            }
+          }}
+        ></textarea>
+        <div>
+          <button
+            type="button"
+            className="ChatInputForm-button toggle-emoji-picker-button"
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          >
+            <SmileyIcon />
+          </button>
+        </div>
+        <button className="ChatInputForm-button">
+          <SendIcon />
+        </button>
+      </form>
+    </>
   )
 }
 

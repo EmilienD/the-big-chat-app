@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import './Emote.css'
 
 export const emotes = {
   dovy: {
@@ -30,5 +31,25 @@ const Emote = ({ name }) => {
 }
 
 Emote.propTypes = { name: PropTypes.string }
+
+export const EmotePicker = ({ onPick }) => {
+  return (
+    <div className="EmotePicker">
+      {Object.keys(emotes).map((key) => (
+        <button type="button" key={key} onClick={() => onPick(key)}>
+          <Emote name={key} />
+        </button>
+      ))}
+      <button
+        style={{ textShadow: '0 0 5px var(--outer-space-crayola)' }}
+        type="button"
+        onClick={() => onPick('🙌')}
+      >
+        🙌
+      </button>
+    </div>
+  )
+}
+EmotePicker.propTypes = { onPick: PropTypes.func }
 
 export default Emote

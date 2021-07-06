@@ -1,3 +1,17 @@
 .Emote {
   height: 2em;
 }
+
+.EmotePicker{
+  background-color: var(--eggshell);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.EmotePicker button {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  padding: 0.25em 0.5em;
+}
