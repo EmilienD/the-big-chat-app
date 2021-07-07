@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Markdown from 'markdown-to-jsx'
 import Emote, { emotes } from './Emote'
+import { Nickname } from '../molecules/Nickname'
 import './MessageList.css'
 import { Poll } from '../molecules/Poll'
 const noRenderOverride = { component: () => null }
@@ -20,12 +21,7 @@ const MessageList = ({ messages, sendAnswer }) => {
           case 'message':
             return (
               <li key={message.id} className="MessageList-item">
-                <span className="nick" style={{ color: message.color }}>
-                  {(message.decorate || []).map((item) =>
-                    emotes[item] ? <Emote name={item} key={item} /> : item
-                  )}
-                  {message.nickname}:
-                </span>
+                <Nickname {...message} />
                 <Markdown
                   options={{
                     forceInline: true,

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Field, Form } from 'react-final-form'
+import { Nickname } from '../molecules/Nickname'
 import PropTypes from 'prop-types'
 import './Poll.css'
 
@@ -35,9 +36,7 @@ export const Poll = ({ sendAnswer, pollMessage, messages }) => {
             .values()
         ).map((answer) => (
           <li key={answer.id}>
-            <span className="nick" style={{ color: answer.color }}>
-              {answer.nickname}:
-            </span>{' '}
+            <Nickname color={answer.color} nickname={answer.nickname} />
             {answer.content.answer}
           </li>
         ))}
