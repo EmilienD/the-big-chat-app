@@ -1,13 +1,13 @@
 @keyframes pulsate {
   40% {
-    transform: scale(0.6);
+    transform: scale(0.6) translateY(-50%);
   }
   50% {
-    transform: scale(1);
+    transform: scale(1) translateY(-50%);
   }
 
   60% {
-    transform: scale(0.6);
+    transform: scale(0.6) translateY(-50%);
   }
 }
 
@@ -16,7 +16,7 @@
   animation-name: pulsate;
   animation-duration: 1.5s;
   animation-timing-function: ease;
-  transform: scale(0.5);
+  transform: scale(0.5) translateY(-50%);
   max-width: 100%;
 }
 
