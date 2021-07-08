@@ -1,0 +1,97 @@
+@keyframes Zidane-Headbutt {
+  25% {
+    left: 55%;
+  }
+  50% {
+    left: 55%;
+    transform: rotate(0deg);
+  }
+  55% {
+    left: 55%;
+    transform: rotate(-35deg);
+  }
+  75% {
+    left: 55%;
+    transform: rotate(0deg);
+  }
+
+}
+
+@keyframes Materazzi-Consequences {
+  25% {
+    right: 55%;
+  }
+  55% {
+    right: 55%;
+    transform: rotate(0deg);
+  }
+  65% {
+    right: 55%;
+    transform: rotate(-90deg)  translateX(100px);
+  }
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+
+.Headbutt{
+  opacity: 0;
+  height: 0;
+  pointer-events: none;
+  position: relative;
+  width: 100vw;
+  align-self: center;
+}
+
+.Headbutt-container {
+  width: 100vw;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  height: 14em;
+}
+
+.Headbutt.active {
+  opacity: 1;
+}
+
+.Headbutt .player {
+  padding-top: 1em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  color: var(--eggshell);
+  text-shadow: 0 0 15px var(--outer-space-crayola);
+  text-align: center;
+  font-size: 2em;
+}
+.Headbutt .player img {
+  height: 80%;
+}
+
+.Headbutt .player.Materazzi{
+  right: 100%;
+  transform-origin: bottom center;
+}
+
+.Headbutt .player.Zidane {
+  left: 100%;
+  transform-origin: bottom left;
+}
+
+.Headbutt.active .player{
+  animation-iteration-count: 1;
+  animation-duration: 2.5s;
+  animation-timing-function: linear;
+}
+
+.Headbutt.active .player.Zidane {
+  animation-name: Zidane-Headbutt;
+}
+
+.Headbutt.active .player.Materazzi {
+  animation-name: Materazzi-Consequences;
+}

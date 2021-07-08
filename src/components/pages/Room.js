@@ -9,6 +9,7 @@ import ChatInputForm from '../organisms/ChatInputForm'
 import { conf } from '../../config'
 import { Ola } from '../molecules/Ola'
 import { Crown } from '../molecules/Crown'
+import { Headbutt } from '../molecules/Headbutt'
 import useWebSocket from 'react-use-websocket'
 
 const fifo = (limit) => (array) => (item) =>
@@ -71,6 +72,7 @@ export const Room = ({ roomName = 'main', user, setCrown }) => {
         />
       </div>
       <Ola messages={messages} />
+      <Headbutt messages={messages} />
       <Crown messages={messages} setCrown={setCrown} user={user} />
       <ChatInputForm
         postMessage={(message) => {
@@ -78,22 +80,42 @@ export const Room = ({ roomName = 'main', user, setCrown }) => {
             return
           } else if (user) {
             const [hasCommand, command, content] =
-              /\/(poll|crown) (.+)/.exec(message) || []
+              /\/([A-Za-z]+) (.+)/.exec(message) || []
             // User has a crown since less than 30 minutes
             const isKing =
               user.crown && Date.now() - 1800000 < new Date(user.crown.datetime)
-            outgoingMessages.sendMessage(
-              JSON.stringify({
-                nickname: user.nickname,
-                color: user.color,
-                decorate: isKing ? ['theking'] : [],
-                userId: user.id,
-                id: v4(),
-                datetime: new Date(),
-                content: hasCommand ? content : message,
-                type: hasCommand ? command : 'message',
-              })
-            )
+            if (hasCommand) {
+              if (
+                (command === 'headbutt' && isKing) ||
+                command !== 'headbutt'
+              ) {
+                outgoingMessages.sendMessage(
+                  JSON.stringify({
+                    nickname: user.nickname,
+                    color: user.color,
+                    decorate: isKing ? ['theking'] : [],
+                    userId: user.id,
+                    id: v4(),
+                    datetime: new Date(),
+                    content,
+                    type: command,
+                  })
+                )
+              }
+            } else {
+              outgoingMessages.sendMessage(
+                JSON.stringify({
+                  nickname: user.nickname,
+                  color: user.color,
+                  decorate: isKing ? ['theking'] : [],
+                  userId: user.id,
+                  id: v4(),
+                  datetime: new Date(),
+                  content: message,
+                  type: 'message',
+                })
+              )
+            }
           }
         }}
       />
