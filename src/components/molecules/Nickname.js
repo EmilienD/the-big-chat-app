@@ -15,7 +15,7 @@ export const Nickname = ({ decorate, color, nickname }) => {
 }
 
 Nickname.propTypes = {
-  decorate: PropTypes.string,
+  decorate: PropTypes.array,
   color: PropTypes.string,
   nickname: PropTypes.string,
 }

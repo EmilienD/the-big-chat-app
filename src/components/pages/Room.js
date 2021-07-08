@@ -40,7 +40,6 @@ export const Room = ({ roomName = 'main', user, setCrown }) => {
     fetch(`${conf.reactAppUserServiceUrl}/messages/${roomName}`)
       .then((response) => response.json())
       .then((body) => {
-        console.log(body)
         const bodyMessagesIdMap = body.messages.reduce((acc, { message }) => {
           acc[message.id] = message
           return acc

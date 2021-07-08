@@ -11,7 +11,6 @@ export const Crown = ({ messages, setCrown, user }) => {
       (acc, m) => (m.type === 'crown' ? m : acc),
       null
     )
-    console.log(crownCommand, user)
     if (crownCommand && crownCommand.content === user.nickname) {
       setCrown(crownCommand)
     }
@@ -47,7 +46,7 @@ export const Crown = ({ messages, setCrown, user }) => {
 }
 
 Crown.propTypes = {
-  messages: PropTypes.arrays,
+  messages: PropTypes.array,
   setCrown: PropTypes.func,
   user: PropTypes.object,
 }

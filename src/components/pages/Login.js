@@ -21,7 +21,6 @@ export const Login = ({ onLogin }) => {
           })
           const body = await res.json()
           if (res.ok) {
-            console.log(body)
             onLogin(body.user)
           } else {
             setError('Could not login, try again')
