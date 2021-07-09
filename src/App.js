@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { Room } from './components/pages/Room'
@@ -12,6 +12,22 @@ function App() {
     localStorage.removeItem('user')
   }
   const [user, setUser] = useState(storedUser)
+  // Quick fix: auto-reload after long time without focus, to prevent websocket disconnection on mobile
+  const [focusLostTime, setFocusLostTime] = useState(0)
+  useEffect(() => {
+    const handleBlur = () => setFocusLostTime(Date.now())
+    const handleFocus = () => {
+      if (Date.now() - focusLostTime > 180000) {
+        location.reload()
+      }
+    }
+    window.addEventListener('blur', handleBlur)
+    window.addEventListener('focus', handleFocus)
+    return () => {
+      window.removeEventListener('blur', handleBlur)
+      window.removeEventListener('focus', handleFocus)
+    }
+  }, [focusLostTime])
 
   return (
     <Switch>
