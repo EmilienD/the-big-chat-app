@@ -21,7 +21,7 @@ export const Headbutt = ({ messages }) => {
       }
     }
   }, [lastMessage, status])
-  return (
+  return status === 'STARTED' ? (
     <div className={cx('Headbutt', { active: status === 'STARTED' })}>
       <div className="Headbutt-container">
         <div className="player Materazzi">
@@ -39,7 +39,7 @@ export const Headbutt = ({ messages }) => {
         </div>
       </div>
     </div>
-  )
+  ) : null
 }
 
 Headbutt.propTypes = {
