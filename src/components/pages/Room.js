@@ -11,6 +11,7 @@ import { Ola } from '../molecules/Ola'
 import { Crown } from '../molecules/Crown'
 import { Headbutt } from '../molecules/Headbutt'
 import useWebSocket from 'react-use-websocket'
+import { VictorySlide } from '../molecules/VictorySlide'
 
 const fifo = (limit) => (array) => (item) =>
   array.length === limit ? array.slice(1).concat(item) : array.concat(item)
@@ -71,6 +72,7 @@ export const Room = ({ roomName = 'main', user, setCrown }) => {
           }}
         />
       </div>
+      <VictorySlide messages={messages} />
       <Ola messages={messages} />
       <Headbutt messages={messages} />
       <Crown messages={messages} setCrown={setCrown} user={user} />
