@@ -21,6 +21,12 @@ export const emotes = {
   theking: {
     mimetype: 'png',
   },
+  sweetcaroline: {
+    mimetype: 'png',
+  },
+  cominghome: {
+    mimetype: 'png',
+  },
 }
 
 const Emote = ({ name }) => {
