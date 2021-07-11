@@ -4,11 +4,22 @@ import cx from 'classnames'
 import './Ola.css'
 
 const hasHandsUp = (string) => /.*🙌.*/.test(string)
+const waverList = [
+  'ola0.png',
+  'ola1.png',
+  'ola2.png',
+  'ola3.png',
+  'ola4.png',
+  'ola5.png',
+  'ola6.png',
+  'ola7.png',
+]
 
 export const Ola = ({ messages = [] }) => {
   const [olaCounter, setOlaCounter] = useState(0)
   const [interactionState, setInteractionState] = useState('WAITING')
   const [startMessageId, setStartMessageId] = useState(null)
+  const [wavers, setWavers] = useState(waverList.slice(0, 4))
   useEffect(() => {
     const newestToOldestMessages = [...messages].reverse()
     switch (interactionState) {
@@ -20,6 +31,9 @@ export const Ola = ({ messages = [] }) => {
             ) - 1
           if (triggerMessageIndex >= 2) {
             setInteractionState('ONGOING')
+            setWavers(
+              [...waverList].sort(() => 0.5 - Math.random()).slice(0, 4)
+            )
             setStartMessageId(newestToOldestMessages[triggerMessageIndex].id)
           }
         }
@@ -57,18 +71,9 @@ export const Ola = ({ messages = [] }) => {
       )}
     >
       <div>
-        <img
-          className="ola-person"
-          src="/animation/ola/204742826_2318162064983834_737642773754099933_n.png"
-        />
-        <img
-          className="ola-person"
-          src="/animation/ola/205334907_796845241007537_8171067347928755157_n.png"
-        />
-        <img
-          className="ola-person"
-          src="/animation/ola/206227299_184371836862265_6087678422532458795_n.png"
-        />
+        <img className="ola-person" src={`/animation/ola/${wavers[0]}`} />
+        <img className="ola-person" src={`/animation/ola/${wavers[1]}`} />
+        <img className="ola-person" src={`/animation/ola/${wavers[2]}`} />
         <img
           onAnimationIteration={() => {
             if (interactionState === 'ONGOING') {
@@ -76,7 +81,7 @@ export const Ola = ({ messages = [] }) => {
             }
           }}
           className="ola-person"
-          src="/animation/ola/206729434_1007151996697007_855251974426690369_n.png"
+          src={`/animation/ola/${wavers[3]}`}
         />
       </div>
     </div>
