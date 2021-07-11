@@ -26,16 +26,14 @@ export const Headbutt = ({ messages }) => {
       <div className="Headbutt-container">
         <div className="player Materazzi">
           <img src="/animation/headbutt/Marco.png" />
-          <br />
-          {lastMessage && lastMessage.content}
+          <p>{lastMessage && lastMessage.content}</p>
         </div>
         <div
           className="player Zidane"
           onAnimationEnd={() => setAnimationState({ status: 'DONE', data })}
         >
           <img src="/animation/headbutt/Zinedine.png" />
-          <br />
-          {lastMessage && lastMessage.nickname}
+          <p>{lastMessage && lastMessage.nickname}</p>
         </div>
       </div>
     </div>
